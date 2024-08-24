@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Check if the correct arguments are provided
+if [ "$#" -lt 1 ]; then
+    echo "Usage: $0 <git-log-command>"
+    exit 1
+fi
+
+# Execute the git log command passed as an argument
+git_log_output=$(eval "$@")
+
+# Create or update the reviewed_commits.txt file if it doesn't exist
+touch reviewed_commits.txt
+
+# Loop through each commit in the git log output
+echo "$git_log_output" | while IFS= read -r line; do
+    # Extract the commit hash from the current line
+    commit_hash=$(echo "$line" | awk '{print $1}')
+
+    # Check if the commit hash is in reviewed_commits.txt
+    if grep -q "^$commit_hash" reviewed_commits.txt; then
+        # If the hash exists, find the line and print the associated summary
+        summary=$(grep "^$commit_hash" reviewed_commits.txt)
+        echo "Commit already reviewed: $summary"
+    else
+        # If the hash doesn't exist, print it as a new commit to review
+        echo "New commit to review: $line"
+    fi
+done
