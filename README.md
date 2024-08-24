@@ -14,3 +14,6 @@ Script to help with the organization of code reviews of the ICP blockchain
 `<HASH> <REVIEW>`
 
 As of now the processs to place the reviews in the `reviewed_commits.txt` file is still manual
+
+## Example
+![image](https://github.com/user-attachments/assets/6539aa7d-c6f6-49bf-8ab8-89d4d4a8dbac)
